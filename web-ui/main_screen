@@ -1,0 +1,61 @@
+from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
+
+app = Flask(__name__)
+app = Flask(__name__)
+
+components = {
+    'motherboard': [],
+    'supply': [],
+    'cpu': [],
+    'gpu': [],
+    'cooler': [],
+    'ram': [],
+    'hdd': [],
+    'frame': []
+}
+
+@app.route('/')
+def index():
+    return render_template('configurator.html', components=components)
+components = {
+    'motherboard': ['ASUS Prime', 'MSI MAG', 'Gigabyte', 'ASRock'],
+    'supply': ['500W', '650W', '750W', '850W'],
+    'cpu': ['Intel Core i5', 'Intel Core i7', 'AMD Ryzen 5', 'AMD Ryzen 7'],
+    'gpu': ['NVIDIA RTX 3060', 'NVIDIA RTX 3070', 'AMD RX 6600', 'AMD RX 6700'],
+    'ram': ['8GB DDR4', '16GB DDR4', '32GB DDR4', '64GB DDR4'],
+    'storage': ['SSD 256GB', 'SSD 512GB', 'HDD 1TB', 'HDD 2TB']
+}
+@app.route('/')
+def index():
+    return render_template('configurator.html', components=components)
+
+@app.route('/add_component', methods=['POST'])
+def add_component():
+    component_type = request.form.get('type')
+    component_name = request.form.get('name')
+    if component_type in components:
+        components[component_type].append(component_name)
+        return jsonify({'status': 'success'})
+    return jsonify({'status': 'error'})
+@app.route('/add_component', methods=['POST'])
+def add_component():
+    component_type = request.form.get('type')
+    component_name = request.form.get('name')
+    if component_type in components:
+        components[component_type].append(component_name)
+        return jsonify({'status': 'success'})
+    return jsonify({'status': 'error'})
+
+@app.route('/get_components')
+def get_components():
+    return jsonify(components)
+@app.route('/get_components')
+def get_components():
+    return jsonify(components)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+if __name__ == '__main__':
+    app.run(debug=True)
